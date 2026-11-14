@@ -46,11 +46,15 @@ a pointer moving backwards is honored as a rollback).
       "<rust-target-triple>": { "asset": "<file>", "sha256": "<digest>" }
     }
   },
-  "minMarker": "0.1.0",              // Marker version floor for this pi
+  "minApp": "0.1.0",                 // client-app version floor for this release
   "severity": "normal",              // "normal" | "critical" (forced upgrade)
   "notes": "…"
 }
 ```
+
+The manifest schema is deliberately app-agnostic (`minApp`, not
+`minMarker`) so other applications can run their own channels against the
+same `release-channel` crate without schema drift.
 
 Clients fetch:
 

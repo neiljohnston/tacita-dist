@@ -31,7 +31,7 @@
       }
     }
   },
-  "minMarker": "0.1.0",
+  "minApp": "0.1.0",
   "severity": "normal",
   "notes": "Initial channel entry: pi v1.5.2, hashes copied verbatim from upstream SHA256SUMS."
 }

@@ -1,9 +1,9 @@
-# marker-dist
+# tacita-dist
 
-Public distribution channel for Marker's bundled Pi agent binary. Kept separate
-from the private Marker app repo on purpose: this repo is the **approval gate**
+Public distribution channel for Tacita's bundled Pi agent binary. Kept separate
+from the private Tacita app repo on purpose: this repo is the **approval gate**
 between upstream [earendil-works/pi](https://github.com/earendil-works/pi)
-releases and what Marker ships/updates to.
+releases and what Tacita ships/updates to.
 
 ## What lives here
 
@@ -20,13 +20,13 @@ tampering is detected client-side.
 ## Approval process (the point of this repo)
 
 1. A new pi release appears upstream.
-2. Test it against Marker: RPC bridge smoke test, bundled skills
+2. Test it against Tacita: RPC bridge smoke test, bundled skills
    (wayfinder/grilling), tool policy (no bash), rg/fd pre-staging.
 3. If good: update `pi-channel.json` `approved` to the new tag + digests from
-   upstream `SHA256SUMS`, set `minMarker` if the pi release requires a newer
-   Marker bridge, add a `notes` line, commit.
+   upstream `SHA256SUMS`, set `minTacita` if the pi release requires a newer
+   Tacita bridge, add a `notes` line, commit.
 4. Tag the manifest revision: `git tag channel-vN && git push --tags`. Tags are
-   the immutable audit trail of what any Marker release ever saw.
+   the immutable audit trail of what any Tacita release ever saw.
 
 If a release turns out bad after approval: move `approved` back to the known
 good version, commit, tag. Clients revert on their next channel check
@@ -53,21 +53,21 @@ a pointer moving backwards is honored as a rollback).
 ```
 
 The manifest schema is deliberately app-agnostic (`minApp`, not
-`minMarker`) so other applications can run their own channels against the
+`minTacita`) so other applications can run their own channels against the
 same `release-channel` crate without schema drift.
 
 Clients fetch:
 
 ```
-https://raw.githubusercontent.com/neiljohnston/marker-dist/main/pi-channel.json
+https://raw.githubusercontent.com/neiljohnston/tacita-dist/main/pi-channel.json
 ```
 
 Any fetch/parse/validation failure is a silent no-op client-side — the binary
-bundled with the Marker installer remains the floor. Rollback via tag-pinned
+bundled with the Tacita installer remains the floor. Rollback via tag-pinned
 raw URLs (`/tag/channel-vN/pi-channel.json`) is for forensics, not runtime.
 
 ## Future
 
 A `signature` field (ed25519 over the canonical manifest JSON, pubkey embedded
-in Marker) can be added without a schema break when tamper-resistance beyond
+in Tacita) can be added without a schema break when tamper-resistance beyond
 git-history integrity is needed.
